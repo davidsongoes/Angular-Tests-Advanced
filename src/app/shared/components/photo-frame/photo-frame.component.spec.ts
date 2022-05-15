@@ -2,12 +2,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PhotoFrameComponent } from './photo-frame.component';
 import { PhotoFrameModule } from './photo-frame.module';
 
-describe(PhotoFrameComponent.name, () =>{
-  let fixture:  ComponentFixture<PhotoFrameComponent> = null;
+describe(PhotoFrameComponent.name, () => {
+  let fixture: ComponentFixture<PhotoFrameComponent> = null;
   let component: PhotoFrameComponent;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PhotoFrameModule]
+      imports: [PhotoFrameModule],
     }).compileComponents();
     fixture = TestBed.createComponent(PhotoFrameComponent);
     component = fixture.componentInstance;
@@ -15,5 +15,14 @@ describe(PhotoFrameComponent.name, () =>{
 
   it('Should create componente', () => {
     expect(component).toBeTruthy();
-  })
+  });
+
+  it(`#${PhotoFrameComponent.prototype.like.name} Should trigger (@Output liked) once when called multiple times within debounce time`, () => {
+    fixture.detectChanges();
+    let times = 0;
+    component.liked.subscribe(() => times++);
+    component.like();
+    component.like();
+    expect(times).toBe(1);
+  });
 });
