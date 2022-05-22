@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Event } from '@angular/router';
 import { ActionDirectiveModule } from './action-directive.module';
 import { ActionDirective } from './action.directive';
 
@@ -19,6 +20,14 @@ describe(ActionDirective.name, () => {
     const divEl: HTMLElement =
       fixture.nativeElement.querySelector('.dummy-component');
     const event: KeyboardEvent = new KeyboardEvent('keyup', { key: 'Enter' });
+    divEl.dispatchEvent(event);
+    expect(component.hasEvent()).toBe(true);
+  });
+
+  it(`(D) (@Output appAction) Should emit event with payload when clicked`, () => {
+    const divEl: HTMLElement =
+      fixture.nativeElement.querySelector('.dummy-component');
+    const event: MouseEvent = new MouseEvent('click');
     divEl.dispatchEvent(event);
     expect(component.hasEvent()).toBe(true);
   });
