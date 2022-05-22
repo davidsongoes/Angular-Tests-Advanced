@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { Event } from '@angular/router';
 import { ActionDirectiveModule } from './action-directive.module';
 import { ActionDirective } from './action.directive';
@@ -17,8 +18,13 @@ describe(ActionDirective.name, () => {
   });
 
   it(`(D) (@Output appAction) Should emit event with payload when ENTER key is pressed`, () => {
-    const divEl: HTMLElement =
-      fixture.nativeElement.querySelector('.dummy-component');
+    // #1 Option
+    // const divEl: HTMLElement =
+    //   fixture.nativeElement.querySelector('.dummy-component');
+    // #2 Option
+    const divEl: HTMLElement = fixture.debugElement.query(
+      By.directive(ActionDirective)
+    ).nativeElement;
     const event: KeyboardEvent = new KeyboardEvent('keyup', { key: 'Enter' });
     divEl.dispatchEvent(event);
     expect(component.hasEvent()).toBeTrue();
