@@ -7,7 +7,7 @@ import { Photo } from './models/photo.model';
   styleUrls: ['photo-board.component.scss'],
 })
 export class PhotoBoardComponent implements OnChanges {
-  @Input() public phots: Photo[];
+  @Input() public photos: Photo[];
   public rows: any[][] = [];
   constructor() {}
 
