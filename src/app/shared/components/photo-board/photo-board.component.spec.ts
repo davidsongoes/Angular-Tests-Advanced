@@ -1,3 +1,4 @@
+import { SimpleChange, SimpleChanges } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Photo } from './models/photo.model';
 import { PhotoBoardComponent } from './photo-board.component';
@@ -28,9 +29,13 @@ describe(PhotoBoardComponent.name, () => {
     component = fixture.componentInstance;
   });
 
-  fit(`Should display rows and columns when (@Input photos) has value`, () => {
+  it(`Should display rows and columns when (@Input photos) has value`, () => {
     component.photos = buildPhotosList();
     fixture.detectChanges();
+    const change: SimpleChanges = {
+      photos: new SimpleChange([], component.photos, true),
+    };
+    component.ngOnChanges(change);
     expect(component.rows.length).withContext('Number of Rows').toBe(2);
     expect(component.rows[0].length)
       .withContext('Number of columns from the first row')
