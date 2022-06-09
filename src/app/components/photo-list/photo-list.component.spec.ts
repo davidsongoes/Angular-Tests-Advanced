@@ -26,8 +26,23 @@ describe(PhotoListComponent.name, () => {
   });
 
   it(`(D) Should display board when data arrives`, () => {
-    fixture.detectChanges();
     const photos = buildPhotosList();
     spyOn(service, 'getPhotos').and.returnValue(of(photos));
+    fixture.detectChanges();
+    const board: HTMLElement =
+      fixture.nativeElement.querySelector('app-photo-board');
+    const loader: HTMLElement = fixture.nativeElement.querySelector('.loader');
+    expect(board).withContext('Should display board').not.toBeNull();
+    expect(loader).withContext('Should do not display loder').toBeNull();
+  });
+
+  it(`(D) Should display loader while waiting for data`, () => {
+    spyOn(service, 'getPhotos').and.returnValue(null);
+    fixture.detectChanges();
+    const board: HTMLElement =
+      fixture.nativeElement.querySelector('app-photo-board');
+    const loader: HTMLElement = fixture.nativeElement.querySelector('.loader');
+    expect(board).withContext('Should do not display board').toBeNull();
+    expect(loader).withContext('Should display loder').not.toBeNull();
   });
 });
